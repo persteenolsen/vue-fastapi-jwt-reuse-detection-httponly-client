@@ -33,7 +33,7 @@ function onSubmit(values, { setErrors }) {
 
 <template>
      
-    <div class="col-md-6 offset-md-3 mt-5">
+    <div>
         
         <h3>Vue 3 SPA + FastAPI doing Authentication by JWT, Refresh Token Rotation, Revoked Token Reuse Detection and HttpOnly secure Cookies</h3>
         <br /><br />
