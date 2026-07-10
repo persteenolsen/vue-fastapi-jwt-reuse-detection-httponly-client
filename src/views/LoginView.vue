@@ -35,7 +35,7 @@ function onSubmit(values, { setErrors }) {
      
     <div class="col-md-6 offset-md-3 mt-5">
         
-        Vue 3 SPA + FastAPI doing Authentication by JWT, Refresh Token Rotation, Revoked Token Reuse Detection and HttpOnly secure Cookies
+        <b>Vue 3 SPA + FastAPI doing Authentication by JWT, Refresh Token Rotation, Revoked Token Reuse Detection and HttpOnly secure Cookies</b>
         <br /><br />
 
         <b>Last updated:</b> 10-07-2026
