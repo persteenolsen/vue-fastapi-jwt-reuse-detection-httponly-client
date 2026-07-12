@@ -1,4 +1,5 @@
 <script setup>
+import { watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
@@ -9,10 +10,16 @@ import { useAuthStore } from '@/stores';
 const route = useRoute();
 const authStore = useAuthStore();
 
-// redirect to home if already logged in
-if (authStore.user) {
-    router.push('/');
-}
+// Redirect when refreshToken() updates the user
+watch(
+    () => authStore.user,
+    (user) => {
+        if (user) {
+            router.push('/');
+        }
+    },
+    { immediate: true }
+);
 
 const schema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
@@ -24,7 +31,6 @@ function onSubmit(values, { setErrors }) {
 
     return authStore.login(username, password)
         .then(() => {
-            // redirect to previous url or default to home page
             router.push(route.query.returnUrl || '/');
         })
         .catch(error => setErrors({ apiError: error }));
@@ -32,7 +38,6 @@ function onSubmit(values, { setErrors }) {
 </script>
 
 <template>
-     
     <div>
         
         <h3>Vue 3 SPA + FastAPI doing Authentication by JWT, Refresh Token Rotation, Revoked Token Reuse Detection and HttpOnly secure Cookies</h3>
@@ -47,24 +52,40 @@ function onSubmit(values, { setErrors }) {
         </div>
 
         <h2>Login</h2>
+
         <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                <div class="invalid-feedback">{{errors.username}}</div>
-            </div>            
+                <Field 
+                    name="username" 
+                    type="text" 
+                    class="form-control" 
+                    :class="{ 'is-invalid': errors.username }" 
+                />
+                <div class="invalid-feedback">{{ errors.username }}</div>
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-                <div class="invalid-feedback">{{errors.password}}</div>
-            </div>            
+                <Field 
+                    name="password" 
+                    type="password" 
+                    class="form-control" 
+                    :class="{ 'is-invalid': errors.password }" 
+                />
+                <div class="invalid-feedback">{{ errors.password }}</div>
+            </div>
+
             <div class="mb-3">
                 <button class="btn btn-primary" :disabled="isSubmitting">
                     <span v-show="isSubmitting" class="spinner-border spinner-border-sm me-1"></span>
                     Login
                 </button>
             </div>
-            <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">{{errors.apiError}}</div>
+
+            <div v-if="errors.apiError" class="alert alert-danger mt-3 mb-0">
+                {{ errors.apiError }}
+            </div>
         </Form>
     </div>
 </template>
