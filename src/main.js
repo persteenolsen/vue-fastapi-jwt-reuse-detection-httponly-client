@@ -26,6 +26,8 @@ async function startApp () {
     // The User will be logged in silent if the browser was just closed and User did not logout
     // 2 ) Disable will not call the api and the User will always need to login 
     // User will login first and receive tokens
+    // NOTE: There is a small bug in this Vue. For the 1) to work the User needs to refresh browser
+    // before atomatically login will happen !
     try {
         const authStore = useAuthStore();
         await authStore.refreshToken();
