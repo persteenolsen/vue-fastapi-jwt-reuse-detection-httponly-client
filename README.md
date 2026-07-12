@@ -22,7 +22,7 @@ This project was built to explore modern frontend authentication architecture, s
 
 - Vue 3 Single Page Application
 - User login and logout
-- Silent Login possible if a valid Refresh token cookie exists
+- Silent login possible if a valid Refresh token cookie exists
 - Authentication using HttpOnly Secure cookies
 - No JWT storage in localStorage
 - Browser-managed authentication state
