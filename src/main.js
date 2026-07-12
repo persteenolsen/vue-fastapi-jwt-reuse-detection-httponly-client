@@ -20,13 +20,13 @@ async function startApp () {
     app.use(createPinia());
     app.use(router);
     
-    // 12-07-2026 - There are two options Enable / Disable
-    // 1 ) Enable will call the api automatically and get both jwt + refresh token if the 
-    // current refresh token cookie not expired ( 7 days )
-    // The User will be logged in silent if the browser was just closed and User did not logout
+    // 12-07-2026 - There are two options:
+    // 1 ) Silent Login: Use the below code block. That will call the api automatically and get
+    // both jwt + refresh token if the current refresh token cookie is present or valid ( 7 days )
+    // The User will be logged in automatically if the browser was just closed and User did not logout
     // 2 ) Disable will not call the api and the User will always need to login 
     // User will login first and receive tokens
-    // Note: If the may be an  issue try to load the vue SPA by add /login to the url
+    // Note: If there may be an issue try to load the vue SPA by add /login to the url
     try {
         const authStore = useAuthStore();
         await authStore.refreshToken();
