@@ -14,7 +14,7 @@ The project uses:
 
 This project was built to explore modern frontend authentication architecture, secure browser token handling, SPA authentication patterns, and integration with a production-style FastAPI authentication backend.
 
-**Last updated:** 21-09-2026
+**Last updated:** 08-11-2026
 
 ---
 
